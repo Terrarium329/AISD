@@ -31,7 +31,11 @@ def reverse(txt: str) -> str:
 
 print(reverse("Hello"))
 
-# def reverse_rek(txt: str) -> str:
+def reverse_rek(txt: str) -> str:
+    if len(txt) == 1: return txt
+    return txt[-1]+reverse(txt[0:-1])
+
+print(reverse_rek("Hello Friend"))
 
 
 
