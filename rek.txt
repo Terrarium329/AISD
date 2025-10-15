@@ -1,0 +1,135 @@
+# Zadanie 2.1. Zaimplementować funkcję numbers(n: int), która wypisze liczby
+# od n do 0.
+
+def numbers(n : int):
+    while n >= 0:
+        print(n)
+        n -= 1
+
+numbers(5)
+
+def numbers_rek(n : int):
+    print(n)
+    if n > 0:
+        numbers_rek(n-1)
+
+numbers_rek(5)
+
+
+# Zadanie 2.2. Zaimplementować funkcję reverse(txt: str) -> str, która zwróci
+# odwrócony ciąg znaków przekazany w parametrze txt.
+
+def reverse(txt: str) -> str:
+    b = -1
+    lista = []
+    for i in range(len(txt)):
+        lista.append(txt[b])
+        b -= 1
+    new_txt = "".join(lista)
+    return new_txt
+
+
+print(reverse("Hello"))
+
+# def reverse_rek(txt: str) -> str:
+
+
+
+
+
+
+# Zadanie 2.3. Zaimplementować wyszukiwanie binarne search(n: int, m: int,
+# numbers: Array)-> Tuple[bool, int] metodą rekurencyjną
+
+
+# def search(n : int, m : int, p : int, numbers : Array) -> Tuple[bool, int]
+
+
+
+
+
+
+
+
+# Zadanie 2.4. Zaimplementować funkcję n_sum(n: int, m: int) -> list[int],
+# która zwróci wszystkie n-cyfrowe liczby z sumą cyfr m > 0.
+
+
+
+def n_sum(n : int, m : int) -> list[int]:
+    lista = []
+    pierwsza_cyfra = 10 ** (n-1)
+    ostatnia_cyfra = 10 ** (n)
+    print(pierwsza_cyfra)
+    print(ostatnia_cyfra)
+    while pierwsza_cyfra != ostatnia_cyfra:
+        num = pierwsza_cyfra
+        suma = 0
+        while num > 0:
+            suma += num % 10
+            num //= 10
+        if suma == m:
+            lista.append(pierwsza_cyfra)
+        pierwsza_cyfra += 1
+    return(lista)
+
+
+print(n_sum(2, 4))
+
+
+
+
+# Zadanie 2.5. * Zaimplementować funkcję n_sums(m: int, p: int, np: int)
+# -> list[int], która zwróci wszystkie n-cyfrowe liczby z sumą cyfr p na indeksach
+# parzystych i np na nieparzystych.
+
+
+
+# Zadanie 2.6. Zaimplementować funkcję power(number: int, n: int) -> int,
+# której zadaniem jest zwrócenie wyniku działania numbern
+# • wprost,
+# • przez algorytm szybkiego potęgowania
+
+def power(number : int, n : int) -> int:
+    wynik = number
+    for i in range(n-1):
+        wynik = wynik * number
+    return wynik
+
+print(power(5,173))
+
+
+def power_rek(number: int, n: int) -> int:
+    if n == 0:
+        return 1
+    elif n % 2 != 0:
+        return number * power_rek(number, n - 1)
+    else:
+        a = power_rek(number, n/2)
+    return a * a
+
+print(power_rek(5,173))
+
+
+# Zadanie 2.7. Zaimplementować funkcję calculator(t: tuple) -> int, która
+# oblicze wyraz t podany w postaci trójelementowej krotki, w której skrajne elementy
+# są wyrazami lub liczbami, a środkowe znakiem "+łub *-*. Przykład
+# calculator (((5,’+’,-1),’+’,3), ’-’, 2) -> 5
+
+
+def calculator(t: tuple) -> int:
+    if type(t[0]) == tuple:
+        t[0] = calculator(t[0])
+    if type(t[2]) == tuple:
+        t[2] = calculator(t[2])
+    if t[1] == "+":
+        wynik = t[0] + t[2]
+    elif t[1] == "-":
+        wynik = t[0] - t[2]
+    return wynik
+
+
+print(calculator((3,'+',2)))
+
+print(calculator(((5,"+",-1),"+",3), "-", 2))
+print(calculator(((5,'+',-1),'+',3),'-',2))
