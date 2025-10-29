@@ -1,4 +1,4 @@
-package zad3;
+package zad;
 
 import java.util.Arrays;
 
@@ -44,9 +44,10 @@ public class Results {
         this.results = new int[rozmiarTablicy];
     }
     public double averageResult(){
-        int average = 0
-        for (int i = 0;i < list.size();i++)
-            average +=
+        int average = 0;
+        for (int i = 0;i < this.length();i++)
+            average += this.get(i);
+        return average  ;
     }
 
     public void addResult(int index, int result){
