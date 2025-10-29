@@ -35,7 +35,7 @@ public class Results {
     @Override
     public String toString() {
         return "Results for " + firstName + lastName + ": Average Score = " +
-                averageResult + "Results: " ;
+                averageResult() + "Results: " ;
     }
 
     public Results(String firstName, String lastName, int rozmiarTablicy){
@@ -45,15 +45,20 @@ public class Results {
     }
     public double averageResult(){
         int average = 0;
-        for (int i = 0;i < this.length();i++)
-            average += this.get(i);
+        for (int i:results) {
+            average += i;
+        }
         return average  ;
     }
 
     public void addResult(int index, int result){
 
     }
+    public static void main(String[] args){
+        Results s1 = new Results("Halo","Goodbye",3)
+
+
+    }
 
 
 }
-
