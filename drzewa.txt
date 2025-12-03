@@ -1,0 +1,97 @@
+from typing import Any, Callable
+
+class TreeNode:
+    def __init__(self,value=None,left_child=None,right_child=None):
+        self.value = value
+        self.left_child = left_child
+        self.right_child = right_child
+    def __str__(self):
+        return str(self.value)
+    def add_left(self,child: "TreeNode") -> None:
+        self.left_child = child
+    def add_right(self, child: "Treenode") -> None:
+        self.right_child = child
+    def traverse_in_order(self, visit: Callable[[Any],None]):
+        if self.left_child is None and self.right_child is None:
+            visit(self)
+        else:
+            if self.left_child is not None:
+                self.left_child.traverse_in_order(visit)
+            visit(self)
+            if self.right_child is not None:
+                self.right_child.traverse_in_order(visit)
+
+    def traverse_pre_order(self, visit: Callable[[Any],None]):
+        visit(self)
+        if self.left_child is not None:
+            self.left_child.traverse_pre_order(visit)
+        if self.right_child is not None:
+            self.right_child.traverse_pre_order(visit)
+
+    def traverse_post_order(self, visit: Callable[[Any],None]):
+        if self.left_child is not None:
+            self.left_child.traverse_post_order(visit)
+        if self.right_child is not None:
+            self.right_child.traverse_post_order(visit)
+        visit(self)
+
+
+
+
+
+
+
+
+
+H = TreeNode("H")
+I = TreeNode("I")
+D = TreeNode("D",H,I)
+J = TreeNode("J")
+E = TreeNode("E",J)
+B = TreeNode("B",D,E)
+K = TreeNode("K")
+F = TreeNode("F",K)
+C = TreeNode("C",F,TreeNode("G"))
+A = TreeNode("A",B,C)
+
+in_order = []
+A.traverse_in_order(in_order.append)
+assert [x.value for x in in_order] == ["H",
+"D", "I", "B", "J", "E", "A", "K", "F", "C", "G"]
+
+
+pre_order = []
+A.traverse_pre_order(pre_order.append)
+assert [x.value for x in pre_order] == [ "A","B","D",
+"H","I","E", "J", "C", "F", "K", "G"]
+
+
+post_order = []
+A.traverse_post_order(post_order.append)
+assert [x.value for x in post_order] == [ "H","I","D", "J", "E",
+"B","K" , "F", "G","C","A"]
+
+
+
+class BinaryTree:
+    def __init__(self, root=None):
+        self.root = root
+
+class BinarySearchTree:
+    def __init__(self, root=None):
+        self.root = root
+    def ordered_add(self, value):
+        if value < self.root.value:
+            if self.root.left_child is None:
+                self.root.left_child = TreeNode(value)
+            else:
+                BinarySearchTree(self.root.left_child).ordered_add(value)
+        else:
+            if self.root.right_child is None:
+                self.root.right_child = TreeNode(value)
+            else:
+                BinarySearchTree(self.root.right_child).ordered_add(value)
+    def add(self,value):
+        self.ordered_add(value)
+
+
