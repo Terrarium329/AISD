@@ -1,0 +1,117 @@
+from typing import Any
+
+
+class Vertex:
+    data: Any
+
+    def __init__(self, data=None):
+        self.data = data
+
+    def __str__(self):
+        return str(self.data)
+
+
+class Edge:
+    vertices: set[Vertex]
+    weight: float
+
+    def __init__(self, set, weight=1.0):
+        self.set = set
+        self.weight = weight
+
+    def __str__(self):
+        for i in self.set:
+            return str(i) + " - "
+
+
+class Graph:
+    vertices: list[Vertex]
+    edges: set[Edge]
+
+    def __init__(self, vertices=None, edges=None):
+        self.vertices = vertices
+        self.edges = edges
+
+    def __str__(self):
+        lista1 = []
+        for i in self.vertices:
+            lista1.append(i)
+        return lista1
+
+    def add_vertex(self, value):
+        if self.vertices is not None:
+            self.vertices.append(Vertex(value))
+        else:
+            self.vertices = []
+            self.vertices.append(Vertex(value))
+
+
+    def size(self):
+        liczba = 0
+        if self.vertices is not None:
+            for i in self.vertices:
+                liczba += 1
+        return liczba
+
+    def edge_size(self):
+        liczba = 0
+        if self.edges is not None:
+            for i in self.edges:
+                liczba += 1
+        return liczba
+
+    def add_edge(self, vertex1, vertex2, weight=1.0):
+        if self.edges is not None:
+            self.edges.add(Edge({vertex1, vertex2}))
+        else:
+            self.edges = {Edge({vertex1,vertex2})}
+
+    def is_edge(self, vertex1, vertex2):
+        if self.edges is not None:
+            for i in self.edges:
+                if i.set is not None:
+                    for j in i.set:
+                        if j == vertex1:
+                            for u in i.set:
+                                if u == vertex2:
+                                    return True
+        return False
+
+    def cone(self, value):
+        a = Vertex(value)
+        if self.vertices is not None:
+            for i in self.vertices:
+                self.add_edge(a,i)
+            self.vertices.append(a)
+        else:
+            self.vertices = []
+            self.vertices.append(a)
+    def complete_graph(self,*values):
+        for i in values:
+            self.add_vertex(i)
+        for i in self.vertices:
+            for j in self.vertices:
+                if self.is_edge(i,j) == False and i != j:
+                    self.add_edge(i,j)
+
+
+
+G = Graph()
+assert G.size() == 0
+assert G.edge_size() == 0
+G.add_vertex('v0')
+assert G.size() == 1
+assert G.edge_size() == 0
+G.add_vertex('v1')
+G.cone('v2')
+assert G.edge_size() == 2
+
+# assert G.is_edge(G.V[0], G.V[1]) == False
+# G.add_vertex(’v3’)
+# G.add_edge(G.V[0],G.V[3])
+
+G_complete = Graph()
+G_complete.complete_graph('x0','x1','x2','x3')
+assert G_complete.size() == 4
+assert G_complete.edge_size() == 6
+
